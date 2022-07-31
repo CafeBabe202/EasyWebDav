@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<D:multistatus xmlns:D="DAV:">
+    <D:response>
+        <D:href>/dav/local/</D:href>
+        <D:propstat>
+            <D:prop>
+                <D:displayname>Downloads</D:displayname>
+                <D:resourcetype>
+                    <D:collection xmlns:D="DAV:" />
+                </D:resourcetype>
+                <D:getlastmodified>Sat, 23 Jul 2022 07:41:17 GMT</D:getlastmodified>
+                <D:supportedlock>
+                    <D:lockentry xmlns:D="DAV:">
+                        <D:lockscope>
+                            <D:exclusive />
+                        </D:lockscope>
+                        <D:locktype>
+                            <D:write />
+                        </D:locktype>
+                    </D:lockentry>
+                </D:supportedlock>
+            </D:prop>
+            <D:status>HTTP/1.1 200 OK</D:status>
+        </D:propstat>
+    </D:response>
+    <D:response>
+        <D:href>/dav/local/Telegram%20Desktop/</D:href>
+        <D:propstat>
+            <D:prop>
+                <D:resourcetype>
+                    <D:collection xmlns:D="DAV:" />
+                </D:resourcetype>
+                <D:getlastmodified>Fri, 22 Jul 2022 13:06:00 GMT</D:getlastmodified>
+                <D:supportedlock>
+                    <D:lockentry xmlns:D="DAV:">
+                        <D:lockscope>
+                            <D:exclusive />
+                        </D:lockscope>
+                        <D:locktype>
+                            <D:write />
+                        </D:locktype>
+                    </D:lockentry>
+                </D:supportedlock>
+                <D:displayname>Telegram Desktop</D:displayname>
+            </D:prop>
+            <D:status>HTTP/1.1 200 OK</D:status>
+        </D:propstat>
+    </D:response>
+    <D:response>
+        <D:href>/dav/local/alist-linux-amd64</D:href>
+        <D:propstat>
+            <D:prop>
+                <D:displayname>alist-linux-amd64</D:displayname>
+                <D:getcontentlength>11733860</D:getcontentlength>
+                <D:getcontenttype></D:getcontenttype>
+                <D:getetag>"16f5fb6fdd398000b30b64"</D:getetag>
+                <D:resourcetype></D:resourcetype>
+                <D:getlastmodified>Mon, 06 Jun 2022 08:41:36 GMT</D:getlastmodified>
+                <D:supportedlock>
+                    <D:lockentry xmlns:D="DAV:">
+                        <D:lockscope>
+                            <D:exclusive />
+                        </D:lockscope>
+                        <D:locktype>
+                            <D:write />
+                        </D:locktype>
+                    </D:lockentry>
+                </D:supportedlock>
+            </D:prop>
+            <D:status>HTTP/1.1 200 OK</D:status>
+        </D:propstat>
+    </D:response>
+    <D:response>
+        <D:href>/dav/local/data/</D:href>
+        <D:propstat>
+            <D:prop>
+                <D:displayname>data</D:displayname>
+                <D:resourcetype>
+                    <D:collection xmlns:D="DAV:" />
+                </D:resourcetype>
+                <D:getlastmodified>Sat, 23 Jul 2022 07:35:46 GMT</D:getlastmodified>
+                <D:supportedlock>
+                    <D:lockentry xmlns:D="DAV:">
+                        <D:lockscope>
+                            <D:exclusive />
+                        </D:lockscope>
+                        <D:locktype>
+                            <D:write />
+                        </D:locktype>
+                    </D:lockentry>
+                </D:supportedlock>
+            </D:prop>
+            <D:status>HTTP/1.1 200 OK</D:status>
+        </D:propstat>
+    </D:response>
+    <D:response>
+        <D:href>/dav/local/%E5%95%A6%E5%95%A6%E5%95%A6.png</D:href>
+        <D:propstat>
+            <D:prop>
+                <D:resourcetype></D:resourcetype>
+                <D:getlastmodified>Sat, 23 Jul 2022 07:37:28 GMT</D:getlastmodified>
+                <D:supportedlock>
+                    <D:lockentry xmlns:D="DAV:">
+                        <D:lockscope>
+                            <D:exclusive />
+                        </D:lockscope>
+                        <D:locktype>
+                            <D:write />
+                        </D:locktype>
+                    </D:lockentry>
+                </D:supportedlock>
+                <D:displayname>å¦å¦å¦.png</D:displayname>
+                <D:getcontentlength>13179311</D:getcontentlength>
+                <D:getcontenttype></D:getcontenttype>
+                <D:getetag>"17046536a58cedfac919af"</D:getetag>
+            </D:prop>
+            <D:status>HTTP/1.1 200 OK</D:status>
+        </D:propstat>
+    </D:response>
+</D:multistatus>
