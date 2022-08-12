@@ -35,8 +35,15 @@ public class DavFile {
             return false;
         String path = StringUtils.urlEncode(StringUtils.pathConcat(this.path, name));
         DavResponse response = this.request.put(path, is, len);
-        System.out.println(response);
         return response.getCode() / 100 == 2;
+    }
+
+    public boolean mkdir(String name) {
+        if (this.isFile())
+            return false;
+        DavResponse response = this.request.mkcolOrNull(StringUtils.pathConcat(this.path, name));
+        return response.getCode() / 100 == 2;
+
     }
 
     public boolean delete() {
@@ -45,8 +52,8 @@ public class DavFile {
     }
 
     public boolean rename(String newName) {
-        StringJoiner sj = new StringJoiner("/", "/", "");
-        String[] strs = this.path.split("/");
+        String[] strs = this.path.split("/+");
+        StringJoiner sj = new StringJoiner("/", "", "");
         for (int i = 0; i < strs.length; i++)
             sj.add(i == strs.length - 1 ? newName : strs[i]);
         String newPath = sj.toString();
@@ -59,8 +66,18 @@ public class DavFile {
         return res;
     }
 
-    public boolean move(String path) {
-        return false;
+    public boolean move(String newPath) {
+        String newPathName = newPath + this.name;
+        DavResponse response = this.request.move(this.path, newPathName);
+        boolean res = response != null && response.getCode() / 100 == 2;
+        if (res) {
+            this.path = newPath;
+        }
+        return res;
+    }
+
+    public boolean move(DavFile file) {
+        return file.isFile() ? false : this.move(file.getPath());
     }
 
     public boolean exist() {
@@ -73,15 +90,15 @@ public class DavFile {
         return this.subFile;
     }
 
-    public DavInputStream download() throws IOException{
+    public DavInputStream download() throws IOException {
         return this.request.getOrNull(this.path);
     }
 
     public boolean refresh() {
         DavResponse response;
         List<DavFileFactory> factories;
-        if (this.size > 0 || (response = this.request.propfindOrNull(this.path)) == null || response.getCode() / 100 != 2
-                || (factories = XMLParser.propFindResult(response.getBody())) == null)
+        if (this.size > 0 || (response = this.request.propfindOrNull(this.path)) == null
+                || response.getCode() / 100 != 2 || (factories = XMLParser.propFindResult(response.getBody())) == null)
             return false;
 
         if (response.getCode() == 404)

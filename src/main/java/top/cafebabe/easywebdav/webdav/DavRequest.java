@@ -5,10 +5,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.util.Base64;
-import java.util.LinkedList;
-
-import java.util.List;
 import java.util.Base64.Encoder;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.net.ssl.SSLSocketFactory;
 
@@ -18,8 +17,7 @@ import top.cafebabe.easywebdav.webdav.io.DavInputStream;
 /**
  * 主要的请求执行的类，所有的请求逻辑都是本类执行的，对于同一个 WebDav 对象衍生出来的 DavFile 对象将共享一个 DavRequest
  * 对象。除上传和下载之外的所有请求操作将在同一个 Socket 内完成（如果是 KeepAlive 为 true）,上传和下载的流将在新的 socket
- * 内完成，不影响正常的请求操作。
- * 本类不是线程安全的。
+ * 内完成，不影响正常的请求操作。 本类不是线程安全的。
  */
 public class DavRequest {
     private String host;
@@ -111,6 +109,26 @@ public class DavRequest {
         }
     }
 
+    public DavResponse mkcolOrNull(String path) {
+        path = StringUtils.urlEncode(path);
+        String line = "MKCOL " + path + " HTTP/1.1";
+        DavHeader header = this.globalHeader.clone().add("Content-Length", "0");
+        String out = line + "\r\n" + header.toString() + "\r\n\r\n";
+        try {
+            DavResponse response = this.request(out);
+            if (response.getCode() / 100 == 3) {
+                path = response.getHead().get("Location");
+                return mkcolOrNull(path);
+            }
+            return response;
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        } finally {
+            this.closeSocket();
+        }
+        return null;
+    }
+
     public DavResponse deleteOrNull(String path) {
         path = StringUtils.urlEncode(path);
         String line = "DELETE " + path + " HTTP/1.1";
@@ -148,6 +166,7 @@ public class DavRequest {
                 .add("Overwrite", "F");
         String out = line + "\r\n" + header.toString() + "\r\n\r\n";
         try {
+            this.initSocket();
             this.globalOutputStream.write(out.getBytes());
             DavResponse response = new DavResponse();
             response.setStatusLine(this.readLine(this.globalInputStream));
@@ -214,6 +233,18 @@ public class DavRequest {
         }
         System.out.println(response);
         return null;
+    }
+
+    private DavResponse request(String out) throws IOException {
+        this.initSocket();
+        this.globalOutputStream.write(out.getBytes());
+        DavResponse response = new DavResponse();
+        response.setStatusLine(this.readLine(this.globalInputStream));
+        if (response.getCode() == 400)
+            return response;
+        response.setHeader(this.readHeader(this.globalInputStream));
+        this.readBody(this.globalInputStream, response);
+        return response;
     }
 
     private void write(OutputStream os, String requestLine, DavHeader header) throws IOException {
